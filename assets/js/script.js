@@ -36,7 +36,7 @@ const header = document.querySelector('[data-header]');
 let lastScrollPos = 0;
 const hideHeader = function () {
     const isScrollBottom = lastScrollPos < window.scrollY;
-    if(isScrollBottom) {
+    if (isScrollBottom) {
         header.classList.add('hide');
     } else {
         header.classList.remove('hide');
@@ -46,7 +46,7 @@ const hideHeader = function () {
 }
 
 window.addEventListener('scroll', function () {
-    if(this.window.scrollY >= 50) {
+    if (this.window.scrollY >= 50) {
         header.classList.add('active');
         hideHeader();
     } else {
@@ -74,7 +74,7 @@ const slideNext = function () {
     if (currentSliderPos >= heroSliderItem.length - 1) {
         currentSliderPos = 0;
     } else {
-        currentSliderPos ++;
+        currentSliderPos++;
     }
     updateSliderPos();
 }
@@ -107,3 +107,37 @@ addEventOnElements([heroSliderNextBtn, heroSliderPrevBtn], 'mouseover', function
 addEventOnElements([heroSliderNextBtn, heroSliderPrevBtn], 'mouseover', autoSlide);
 
 window.addEventListener('load', autoSlide);
+
+// parallax effect
+
+// const parallaxItems = document.querySelectorAll('[data-parallax-item]');
+
+// let x, y;
+
+// window.addEventListener('mousemove', function (event) {
+//     x = (event.clientX / window.innerWidth * 10) - 5;
+//     y = (event.clientY / window.innerWidth * 10) - 5;
+
+//     // reverse the number eg. 20 --> -20, -5 --> 5
+
+//     x = x - (x * 2);
+//     y = y - (y * 2);
+
+//     for (let i = 0; len = parallaxItems.length; i < len) {
+//         x = x * Number(parallaxItems[i].dataset.parallaxSpeed);
+//         y = y * Number(parallaxItems[i].dataset.parallaxSpeed);
+//         parallaxItems[i].style.transform = `translate3d(${x}px, ${y}px, 0px)`;
+//     }
+
+// });
+
+document.addEventListener('mousemove', parallax);
+function parallax (e) {
+    document.querySelectorAll('.data-parallax-item').forEach(function(move){
+        var moving_value = move.getAttribute('data-value');
+        var x = e.clientX * moving_value;
+        var y = e.clientY * moving_value;
+
+        move.style.transform = 'translateX(' + x + 'px) translateY(' + y +'px)';
+    });
+}
